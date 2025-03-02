@@ -16,8 +16,12 @@
     "@types/node": "^22.13.8",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "pg": "^8.13.3",
     "ts-node": "^10.9.2",
     "tsc": "^2.0.4",
     "typescript": "^5.8.2"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.11"
   }
 }
