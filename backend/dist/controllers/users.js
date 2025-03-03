@@ -8,28 +8,42 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userRouter = void 0;
-const express_1 = __importDefault(require("express"));
+const express_1 = require("express");
 const user_1 = require("../services/user");
-const app = (0, express_1.default)();
-exports.userRouter = (0, express_1.default)().router;
-exports.userRouter.get('/user', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const userRouter = (0, express_1.Router)();
+userRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield (0, user_1.getUsers)();
     res.json(users).status(200);
 }));
-exports.userRouter.post("/user", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send('About birds');
+userRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    const id = yield (0, user_1.createUser)(data);
+    res.json({ id }).status(201);
 }));
-exports.userRouter.get('/user/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send('About birds');
+userRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.params.id) {
+        if (!isNaN(parseInt(req.params.id))) {
+            const id = parseInt(req.params.id);
+            const user = yield (0, user_1.getUser)(id);
+            res.json(user).status(200);
+            return;
+        }
+        res.json({ msg: "id not provided" }).status(400);
+        return;
+    }
+    res.json({ msg: "id not provided" }).status(400);
+    return;
 }));
-exports.userRouter.patch('/user/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send('About birds');
+userRouter.patch('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    const id = Number(req.params.id);
+    data.id = id;
+    yield (0, user_1.updateUser)(data);
+    res.json({ id }).status(200);
 }));
-exports.userRouter.delete('/user/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send('About birds');
+userRouter.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, user_1.deleteUser)(Number(req.params.id));
+    res.json({ isDeleted: result }).status(200);
 }));
+exports.default = userRouter;

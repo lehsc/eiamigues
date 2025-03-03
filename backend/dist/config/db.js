@@ -18,7 +18,6 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const { Client } = pg_1.default;
 dotenv_1.default.config();
 const connectdb = () => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(process.env.PWD);
     const client = new Client({
         user: process.env.UID,
         password: process.env.PASS,
