@@ -6,7 +6,7 @@
   "scripts": {
     "test": "",
     "build": "npx tsc",
-    "dev": "npx tsc && npx nodemon src/index.ts",
+    "dev": "npx nodemon src/index.ts",
     "start": "npx tsc && node dist/index.js"
   },
   "author": "",
@@ -18,7 +18,6 @@
     "express": "^4.21.2",
     "pg": "^8.13.3",
     "ts-node": "^10.9.2",
-    "tsc": "^2.0.4",
     "typescript": "^5.8.2"
   },
   "devDependencies": {

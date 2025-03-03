@@ -12,19 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// src/index.ts
-const express_1 = __importDefault(require("express"));
+exports.connectdb = void 0;
+const pg_1 = __importDefault(require("pg"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const user_1 = require("./services/user");
-const users_1 = require("./controllers/users");
+const { Client } = pg_1.default;
 dotenv_1.default.config();
-const app = (0, express_1.default)();
-const port = process.env.PORT || 3000;
-app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, user_1.getUsers)();
-    res.send("Express ");
-}));
-app.use("/user", users_1.userRouter);
-app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
+const connectdb = () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(process.env.PWD);
+    const client = new Client({
+        user: process.env.UID,
+        password: process.env.PASS,
+        host: process.env.HOST,
+        database: process.env.DB,
+    });
+    yield client.connect();
+    return client;
 });
+exports.connectdb = connectdb;

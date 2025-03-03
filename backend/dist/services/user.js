@@ -8,23 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-// src/index.ts
-const express_1 = __importDefault(require("express"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const user_1 = require("./services/user");
-const users_1 = require("./controllers/users");
-dotenv_1.default.config();
-const app = (0, express_1.default)();
-const port = process.env.PORT || 3000;
-app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, user_1.getUsers)();
-    res.send("Express ");
-}));
-app.use("/user", users_1.userRouter);
-app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
+exports.getUsers = void 0;
+const db_1 = require("../config/db");
+const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
+    const db = yield (0, db_1.connectdb)();
+    const users = yield db.query("SELECT * FROM users order by id desc");
+    return users.rows;
 });
+exports.getUsers = getUsers;
