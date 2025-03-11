@@ -1,8 +1,8 @@
 import pg from 'pg'
 import dotenv from "dotenv";
 
-const { Client } = pg
-dotenv.config();
+const { Client } = pg // extracts the Client class from the pg module
+dotenv.config(); 
 
 export const connectdb = async(): Promise<pg.Client> => {
     const client = new Client({
@@ -12,6 +12,6 @@ export const connectdb = async(): Promise<pg.Client> => {
         database: process.env.DB,
     });
 
-await client.connect();
-return client;
+    await client.connect();
+    return client;
 }

@@ -13,10 +13,15 @@ const express_1 = require("express");
 const user_1 = require("../services/user");
 const userRouter = (0, express_1.Router)();
 userRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield (0, user_1.getUsers)();
-    res.json(users).status(200);
+    try {
+        const users = yield (0, user_1.getUsers)();
+        res.json(users).status(200);
+    }
+    catch (error) {
+        res.json({ msg: error });
+    }
 }));
-userRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+userRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
     const id = yield (0, user_1.createUser)(data);
     res.json({ id }).status(201);
@@ -36,11 +41,20 @@ userRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function*
     return;
 }));
 userRouter.patch('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = req.body;
-    const id = Number(req.params.id);
-    data.id = id;
-    yield (0, user_1.updateUser)(data);
-    res.json({ id }).status(200);
+    if (req.params.id) {
+        if (!isNaN(parseInt(req.params.id))) {
+            const data = req.body;
+            const id = Number(req.params.id);
+            data.id = id;
+            yield (0, user_1.updateUser)(data);
+            res.json({ id }).status(200);
+            return;
+        }
+        res.json({ msg: "id not provided" }).status(400);
+        return;
+    }
+    res.json({ msg: "id not provided" }).status(400);
+    return;
 }));
 userRouter.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield (0, user_1.deleteUser)(Number(req.params.id));
