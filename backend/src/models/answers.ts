@@ -1,4 +1,4 @@
-export type Answer = {
+export type Answers = {
     id: number,
 	user_id: number,
     post_id: number,

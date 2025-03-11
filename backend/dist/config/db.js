@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectdb = void 0;
 const pg_1 = __importDefault(require("pg"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const { Client } = pg_1.default;
+const { Client } = pg_1.default; // extracts the Client class from the pg module
 dotenv_1.default.config();
 const connectdb = () => __awaiter(void 0, void 0, void 0, function* () {
     const client = new Client({
