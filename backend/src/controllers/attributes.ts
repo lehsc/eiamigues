@@ -19,14 +19,14 @@ attribRouter.get('/:id', async (req, res) => {
             if (!isNaN(parseInt(req.params.id))){
                 const attribute =  await getAttribute(Number(req.params.id))
                 res.json(attribute).status(200)
+            } else{
+                res.json({msg: "id not provided"}).status(400)
+                return
             }
-
+        } else{
             res.json({msg: "id not provided"}).status(400)
             return
         }
-
-        res.json({msg: "id not provided"}).status(400)
-        return
     } catch (error) {
         res.json({msg: error})
     }

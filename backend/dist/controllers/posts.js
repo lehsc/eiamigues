@@ -28,11 +28,15 @@ postRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function*
                 const post = yield (0, post_1.getPost)(Number(req.params.id));
                 res.json(post).status(200);
             }
+            else {
+                res.json({ msg: "id not provided" }).status(400);
+                return;
+            }
+        }
+        else {
             res.json({ msg: "id not provided" }).status(400);
             return;
         }
-        res.json({ msg: "id not provided" }).status(400);
-        return;
     }
     catch (error) {
         res.json({ msg: error });
