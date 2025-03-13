@@ -38,14 +38,14 @@ export const getUser = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async(req: Request, res: Response) => {
-     const data = req.body as Users;
-      const id = Number(req.params.id)
-      data.id = id;
-      await userService.updateUser(data)
-      res.json({id}).status(200)
+    const data = req.body as Users;
+    const id = Number(req.params.id)
+    data.id = id;
+    await userService.updateUser(data)
+    res.json({id}).status(200)
 }
 
 export const deleteUser = async(req: Request, res: Response) => {
-     const result = await userService.deleteUser(Number(req.params.id))
-      res.json({isDeleted: result}).status(200)
+    const result = await userService.deleteUser(Number(req.params.id))
+    res.json({isDeleted: result}).status(200)
 }

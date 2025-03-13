@@ -1,63 +1,44 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const user_1 = require("../services/user");
+const userEndpoints = __importStar(require("../routes/user")); // imports all of the exported values of the module and sticks them in an object (userEndpoints)
 const userRouter = (0, express_1.Router)();
-userRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const users = yield (0, user_1.getUsers)();
-        res.json(users).status(200);
-    }
-    catch (error) {
-        res.json({ msg: error });
-    }
-}));
-userRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = req.body;
-    const id = yield (0, user_1.createUser)(data);
-    res.json({ id }).status(201);
-}));
-userRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.params.id) {
-        if (!isNaN(parseInt(req.params.id))) {
-            const id = parseInt(req.params.id);
-            const user = yield (0, user_1.getUser)(id);
-            res.json(user).status(200);
-            return;
-        }
-        res.json({ msg: "id not provided" }).status(400);
-        return;
-    }
-    res.json({ msg: "id not provided" }).status(400);
-    return;
-}));
-userRouter.patch('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.params.id) {
-        if (!isNaN(parseInt(req.params.id))) {
-            const data = req.body;
-            const id = Number(req.params.id);
-            data.id = id;
-            yield (0, user_1.updateUser)(data);
-            res.json({ id }).status(200);
-            return;
-        }
-        res.json({ msg: "id not provided" }).status(400);
-        return;
-    }
-    res.json({ msg: "id not provided" }).status(400);
-    return;
-}));
-userRouter.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield (0, user_1.deleteUser)(Number(req.params.id));
-    res.json({ isDeleted: result }).status(200);
-}));
+userRouter.get('/', userEndpoints.getUsers);
+userRouter.post("/", userEndpoints.createUser);
+userRouter.get('/:id', userEndpoints.getUser);
+userRouter.patch('/:id', userEndpoints.updateUser);
+userRouter.delete('/:id', userEndpoints.deleteUser);
 exports.default = userRouter;
