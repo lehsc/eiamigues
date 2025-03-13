@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import * as userEndpoints from '../routes/user'
+import * as userEndpoints from '../controllers/user'
 const userRouter = Router()
 userRouter.get('/', userEndpoints.getUsers)
 userRouter.post("/", userEndpoints.createUser)

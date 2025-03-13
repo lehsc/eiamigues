@@ -1,9 +1,14 @@
 import { connectdb } from "../config/db";
 import { Posts } from "../models/posts";
+import { Filters } from "../types/response";
 
-export const getPosts = async (): Promise<Posts[]> => {
+export const getPosts = async (filters: Partial<Filters>): Promise<Posts[]> => {
     const db = await connectdb()
-    const posts = await db.query("SELECT * FROM posts ORDER BY id DESC")
+    if(filters) {
+        const posts = await db.query("SELECT * FROM posts WHERE id < $1 ORDER BY id DESC LIMIT $2", [filters.page, filters.offset])
+        return posts.rows as Posts[]
+    }
+    const posts = await db.query("SELECT * FROM posts ORDER BY id DESC LIMIT $1")
     return posts.rows as Posts[]
 }
 

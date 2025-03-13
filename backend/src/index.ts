@@ -3,21 +3,18 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from 'cors'
 
-import userRouter from "./controllers/users";
-import postRouter from "./controllers/posts";
-import attribRouter from "./controllers/attributes";
-import postAttribRouter from "./controllers/post_attributes";
-import answerRouter from "./controllers/answers";
+import userRouter from "./routers/users";
+import postRouter from "./routers/posts";
+import attribRouter from "./routers/attributes";
+import postAttribRouter from "./routers/post_attributes";
+import answerRouter from "./routers/answers";
 
 
-dotenv.config(); // loads the environment variables from a .env file into process.env
-
-const app: Express = express(); // creates an Express instance
+dotenv.config(); 
+const app: Express = express(); 
 const port = process.env.PORT;  
-
-// Middleware configuration
 app.use(express.json()); 
-app.use(express.urlencoded({ extended: true })); // converts the incoming data into a JS obj and makes it accessible through req.body
+app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 
 // Routes
