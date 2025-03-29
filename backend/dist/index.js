@@ -16,17 +16,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
-const users_1 = __importDefault(require("./controllers/users"));
-const posts_1 = __importDefault(require("./controllers/posts"));
-const attributes_1 = __importDefault(require("./controllers/attributes"));
-const post_attributes_1 = __importDefault(require("./controllers/post_attributes"));
-const answers_1 = __importDefault(require("./controllers/answers"));
-dotenv_1.default.config(); // loads the environment variables from a .env file into process.env
-const app = (0, express_1.default)(); // creates an Express instance
-const port = process.env.PORT;
-// Middleware configuration
+const users_1 = __importDefault(require("./routers/users"));
+const posts_1 = __importDefault(require("./routers/posts"));
+const attributes_1 = __importDefault(require("./routers/attributes"));
+const post_attributes_1 = __importDefault(require("./routers/post_attributes"));
+const answers_1 = __importDefault(require("./routers/answers"));
+dotenv_1.default.config();
+const app = (0, express_1.default)();
+const port = process.env.PORT || 3000;
 app.use(express_1.default.json());
-app.use(express_1.default.urlencoded({ extended: true })); // converts the incoming data into a JS obj and makes it accessible through req.body
+app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cors_1.default)());
 // Routes
 app.use('/user', users_1.default);
@@ -42,3 +41,4 @@ app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
+//# sourceMappingURL=index.js.map

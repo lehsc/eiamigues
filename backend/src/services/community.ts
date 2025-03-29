@@ -1,5 +1,5 @@
-import { connectdb } from "../config/db";
-import { Answers } from "../models/answers";
+import { connectdb } from "../config/db.js";
+import { Answers } from "../models/communities.js";
 
 export const getAnswers = async (): Promise<Answers[]> => {
     const db = await connectdb()

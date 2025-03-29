@@ -3,17 +3,17 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from 'cors'
 
-import userRouter from "./routers/users";
-import postRouter from "./routers/posts";
-import attribRouter from "./routers/attributes";
-import postAttribRouter from "./routers/post_attributes";
-import answerRouter from "./routers/answers";
+import userRouter from "./routers/users.js";
+import postRouter from "./routers/posts.js";
+import attribRouter from "./routers/attributes.js";
+import postAttribRouter from "./routers/post_attributes.js";
+import answerRouter from "./routers/answers.js";
 
 
-dotenv.config(); 
-const app: Express = express(); 
-const port = process.env.PORT;  
-app.use(express.json()); 
+dotenv.config();
+const app: Express = express();
+const port = process.env.PORT || 3000;
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 
@@ -25,7 +25,7 @@ app.use('/post_attribute', postAttribRouter)
 app.use('/answer', answerRouter)
 
 // Root route
-app.get("/", async(req: Request, res: Response) => {
+app.get("/", async (req: Request, res: Response) => {
   res.send("Express ");
 });
 

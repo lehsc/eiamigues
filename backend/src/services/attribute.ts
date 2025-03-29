@@ -1,5 +1,5 @@
-import { connectdb } from "../config/db";
-import { Attributes } from "../models/attributes";
+import { connectdb } from "../config/db.js";
+import { Attributes } from "../models/attributes.js";
 
 export const getAttributes = async (): Promise<Attributes[]> => {
     const db = await connectdb()

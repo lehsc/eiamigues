@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import * as userEndpoints from '../controllers/user'
+import * as userEndpoints from '../controllers/user.js'
 const userRouter = Router()
 
 userRouter.get('/', userEndpoints.getUsers)

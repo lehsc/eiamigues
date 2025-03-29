@@ -28,3 +28,4 @@ const connectdb = () => __awaiter(void 0, void 0, void 0, function* () {
     return client;
 });
 exports.connectdb = connectdb;
+//# sourceMappingURL=db.js.map

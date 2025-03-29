@@ -1,5 +1,5 @@
-import { connectdb } from "../config/db";
-import { PostAttributes } from "../models/post_attributes"
+import { connectdb } from "../config/db.js";
+import { PostAttributes } from "../models/post_attributes.js"
 
 export const getPostAttributes = async (): Promise<PostAttributes[]> => {
     const db = await connectdb()

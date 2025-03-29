@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { getAnswers, getAnswer, createAnswer, updateAnswer , deleteAnswer } from "../services/answer"
-import { Answers } from "../models/answers"
+import { getAnswers, getAnswer, createAnswer, updateAnswer , deleteAnswer } from "../services/community.js"
+import { Answers } from "../models/communities.js"
 
 const answerRouter = Router()
 

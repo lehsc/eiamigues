@@ -1,7 +1,7 @@
-import * as postsService from '../services/post'
+import * as postsService from '../services/post.js'
 import { Request, Response } from 'express'
-import { Filters } from '../types/response'
-import { Posts } from '../models/posts'
+import { Filters } from '../types/response.js'
+import { Posts } from '../models/posts.js'
 export const getPosts = async (req: Request<Partial<Filters>, {}, {}>, res: Response) => {
  try {
         const posts =  await postsService.getPosts(req.params)
@@ -19,6 +19,14 @@ export const getPost = async (req: Request<Required<{id: number}>, {}, {}>, res:
        } catch (error) {
            res.json({msg: error})
        }
+}
+
+export const getUserPosts = async(req: Request, res: Response) => {
+    try {
+        
+    } catch (error) {
+        
+    }
 }
 
 export const createPost = async(req: Request<{}, Posts>, res: Response) => {

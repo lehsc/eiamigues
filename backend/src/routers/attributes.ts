@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { getAttributes, getAttribute, createAttribute, updateAttribute , deleteAttribute } from "../services/attribute"
-import { Attributes } from "../models/attributes"
+import { getAttributes, getAttribute, createAttribute, updateAttribute , deleteAttribute } from "../services/attribute.js"
+import { Attributes } from "../models/attributes.js"
 
 const attribRouter = Router()
 

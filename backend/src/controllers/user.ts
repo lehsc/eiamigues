@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import * as userService from '../services/user';
-import { Users } from '../models/users';
+import * as userService from '../services/user.js';
+import { Users } from '../models/users.js';
 
 export const createUser = async (req: Request, res: Response) => {
   try {

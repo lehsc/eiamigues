@@ -53,3 +53,4 @@ const deleteAttribute = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return false;
 });
 exports.deleteAttribute = deleteAttribute;
+//# sourceMappingURL=attribute.js.map

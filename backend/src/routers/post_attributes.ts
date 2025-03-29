@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { getPostAttributes, getPostAttribute, createPostAttribute, updatePostAttribute , deletePostAttribute } from "../services/post_attribute"
-import { PostAttributes } from "../models/post_attributes"
+import { getPostAttributes, getPostAttribute, createPostAttribute, updatePostAttribute , deletePostAttribute } from "../services/post_attribute.js"
+import { PostAttributes } from "../models/post_attributes.js"
 
 const postAttribRouter = Router()
 

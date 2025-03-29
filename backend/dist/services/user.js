@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUser = exports.createUser = exports.getUser = exports.getUsers = void 0;
+exports.getUserPosts = exports.deleteUser = exports.updateUser = exports.createUser = exports.getUser = exports.getUsers = void 0;
 const db_1 = require("../config/db");
 const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     const db = yield (0, db_1.connectdb)();
@@ -53,3 +53,14 @@ const deleteUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return false;
 });
 exports.deleteUser = deleteUser;
+const getUserPosts = (id, pageId) => __awaiter(void 0, void 0, void 0, function* () {
+    const db = yield (0, db_1.connectdb)();
+    if (pageId) {
+        const data = yield db.query('SELECT * FROM users u JOIN posts p ON u.id = p.user_id WHERE u.id = $1 AND p.id < $2 ORDER BY p.id DESC LIMIT 30', [id, pageId]);
+        return data.rows;
+    }
+    const data = yield db.query("SELECT * FROM posts p JOIN users u WHERE u.id = $1 ORDER BY p.id DESC LIMIT 30", [id]);
+    return data.rows;
+});
+exports.getUserPosts = getUserPosts;
+//# sourceMappingURL=user.js.map
