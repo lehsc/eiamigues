@@ -37,6 +37,23 @@ export const getUser = async (req: Request, res: Response) => {
     }
 };
 
+export const getUserPosts = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    if(!isNaN(id)){
+
+      const users = await userService.getUserPosts(id);
+      res.status(200).json(users);
+      return
+    }
+
+    res.status(400).json({message: "id not provided"});
+    
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar usuários', error });
+  }
+};
+
 export const updateUser = async(req: Request, res: Response) => {
     const data = req.body as Users;
     const id = Number(req.params.id)

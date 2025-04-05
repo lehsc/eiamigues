@@ -1,6 +1,7 @@
-import type { Knex } from "knex";
+import { Knex } from 'knex';
 import  dotenv  from "dotenv";
 dotenv.config()
+
 const config: { [key: string]: Knex.Config } = {
   development: {
     client: "pg",
@@ -32,7 +33,7 @@ const config: { [key: string]: Knex.Config } = {
   // },
 
   production: {
-    client: "postgresql",
+    client: "pg",
     connection: {
       user: process.env.UID,
       password: process.env.PASS,
@@ -51,3 +52,4 @@ const config: { [key: string]: Knex.Config } = {
 };
 
 module.exports = config;
+

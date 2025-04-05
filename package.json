@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "node --loader ts-node/esm --inspect-brk=9229 /backend/src/index.ts",
+    "rollback": "tsc && npx knex migrate:rollback --all",
     "build": "npx tsc",
-    "dev": "npx nodemon src/index.ts",
-    "start": "npx tsc && node dist/index.js"
+    "dev": "tsc && nodemon ./dist/index.js",
+    "start": "tsc && node ./dist/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,11 +20,13 @@
     "express": "^4.21.2",
     "knex": "^3.1.0",
     "pg": "^8.13.3",
-    "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.6.0",
     "@types/cors": "^2.8.17",
-    "@types/pg": "^8.11.11"
+    "@types/pg": "^8.11.11",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2"
   }
 }

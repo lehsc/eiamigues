@@ -22,7 +22,11 @@ export const getPost = async (id: number): Promise<Posts | null> => {
 export const getUserPosts = async (id: number, pageId?: number): Promise<Posts[]> => {
   const db = await connectdb()
   if (pageId) {
-    const data = await db.query("SELECT * FROM posts p INNER JOIN users u on p.user_id = u.id WHERE u.id = $1 AND p.id < $2 ORDER BY p.id DESC LIMIT 30", [id, pageId])
+    const data = await db.query("SELECT p.title, p.content, p.created_at, c.id, c.name, c.publicly_visible, u.name, u.username, u.gender, " +
+    "COUNT(CASE WHEN pg.liked = TRUE THEN 1 END) AS like_count, COUNT(CASE WHEN pg.disliked = TRUE THEN 1 END) AS dislike_count, " +
+    "COUNT(CASE WHEN pg.commented = TRUE THEN 1 END) AS comment_count FROM posts p LEFT JOIN communities c on c.id = p.community_id " +
+    "INNER JOIN users u on p.user_id = u.id LEFT JOIN post_engagements pg on pg.post_id = p.id WHERE u.id = $1 GROUP BY p.title, p.id, " +
+    "p.content, p.created_at, c.id, c.name, c.publicly_visible, u.name, u.username, u.gender ORDER BY p.id DESC LIMIT 30", [id, pageId])
     return data.rows as Posts[]
   }
   else {
@@ -61,3 +65,14 @@ export const deletePost = async (id: number): Promise<boolean> => {
   if (isDeleted) return true
   return false
 }
+export const getPostEngagements = async (id: number): Promise<Boolean> => {
+  const db = await connectdb()
+  const data = await db.query("SELECT p.id, p.title, p.content, p.created_at, p.adults_only, " +
+  "u.username, u.name, u.gender, c.name, c.description, eng.COUNT(CASE WHEN eng.liked = TRUE) like_count, COUNT(CASE WHEN eng.disliked = TRUE) dislike_count, " + 
+  "COUNT(CASE WHEN eng.commented = TRUE) comments_count, eng.liked, eng.disliked FROM users u JOIN posts p on u.id = p.user_id LEFT JOIN communities c " +
+  "on p.community_id = c.id JOIN post_engagements eng on p.id = eng.post_id JOIN user_followers uf on uf.followed_user_id = u.id LEFT JOIN community_followers cf " +
+  "ON cf.community_id = c.id WHERE uf.follower_user_id = $1 OR cf.user_id = $2 ORDER BY p.id DESC")
+  
+  return false
+}
+

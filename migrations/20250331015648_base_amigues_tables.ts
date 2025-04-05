@@ -41,7 +41,7 @@ export async function up(knex: Knex): Promise<void> {
   // Criando a tabela 'community_moderations'
   await knex.schema.createTable('community_moderations', (table) => {
     table.integer('id').primary();
-    table.integer('community_id').references('communities.id').notNullable();
+    table.integer('community_id').references('communities.id').nullable();
     table.integer('user_id').references('users.id').notNullable();
     table.string('roles', 50).notNullable();
     table.timestamp('created_at').defaultTo(knex.fn.now());
@@ -58,7 +58,8 @@ export async function up(knex: Knex): Promise<void> {
 
   // Alterando a tabela 'posts'
   await knex.schema.table('posts', (table) => {
-    table.integer('post_id').references('posts.id').nullable();
+    table.integer('post_id').references('posts.id');
+    table.integer('community_id').references('communities.id');
     table.boolean('comment').defaultTo(false);
     table.boolean('adults_only').defaultTo(false);
     table.smallint('status').defaultTo(0).notNullable();
@@ -97,9 +98,11 @@ export async function down(knex: Knex): Promise<void> {
   await knex.schema.dropTableIfExists('post_comments');
   await knex.schema.dropTableIfExists('post_engagements');
   await knex.schema.table('posts', (table) => {
-    table.dropColumn('creator_id');
-    table.dropColumn('post_id');
-    table.dropColumn('commented');
+    table.dropColumn('post_id')
+    table.dropColumn('community_id')
+    table.dropColumn('comment')
+    table.dropColumn('adults_only')
+    table.dropColumn('status')
   });
   await knex.schema.dropTableIfExists('community_followers');
   await knex.schema.dropTableIfExists('community_moderations');
